@@ -1,0 +1,24 @@
+body{
+    font-family: 'Syne Mono', monospace;
+    background-color: rgb(46, 102, 255);
+    color: #fff;
+
+}
+.title{
+    text-align: center;
+}
+.student-list-container{
+    width: 600px;
+    margin: 0 auto;
+    /* display: block; */
+    border: #000;
+    border-style: solid;
+    border-width: 2px;
+    background-color: gray;
+}
+.name{
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    align-items: center;
+}
