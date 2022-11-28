@@ -27,8 +27,43 @@ function add_student(){
         }
         })
     }
-
-
 console.log(student_list);
+}
+
+
+function make_groups(){
+    const g_num = document.getElementById("group_number").value; //get number of groups
+    const g_num_int = parseInt(g_num); //convert to int
+    if(g_num_int>student_list.length){ //if more groups than students it wont work
+        alert("too many groups");
+    }
+    else{
+       // console.log(g_num_int);
+        const groups = document.getElementById("random-group"); //get container for our groups
+    
+        let ppl_num = student_list.length/g_num_int; //get students / groups
+    
+        ppl_num = Math.ceil(ppl_num); //round up
+        let idx = 0; //keep track of index
+        let group_count = 1; //count group num
+        for(let i = 0; i<g_num_int; i++){
+            const group_div = document.createElement("div"); //create div for groups
+            group_div.classList.add("group"); //name our groups
+            group_div.innerText = "Group "+ group_count; //add numbers to groups
+            groups.append(group_div); //add to main container
+            for(j=0; j<ppl_num; j++){
+                const member = document.createElement("p"); //add paragraphs based on the ppl number
+                member.innerText = student_list[idx]; //add the correct student to group
+                group_div.append(member); //add this stuff tour our group div
+                idx++;
+                if(idx == student_list.length){ //if we reach the end, stop
+                    break;
+                }
+            }
+            group_count++;
+    
+        }
+    }
+
 
 }
