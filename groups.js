@@ -53,10 +53,13 @@ function make_groups(){                ///ERROR when theres 4 names and 3 groups
     
         let ppl_num = student_list.length/g_num_int; //get students / groups
     
-        ppl_num = Math.floor(ppl_num); //round up
+        ppl_num = Math.round(ppl_num); //round up
         let idx = 0; //keep track of index
         let group_count = 1; //count group num
-        for(let i = 0; i<g_num_int; i++){
+        for(let i = 0; i<g_num_int; i++){   //for all numbers of groups
+			if(idx>(student_list.length/2)){    //if index is more than half the list length
+			 ppl_num = Math.round(ppl_num/2);    //round num of people for future loop
+			}
             const group_div = document.createElement("div"); //create div for groups
             group_div.classList.add("group"); //name our groups
             group_div.innerText = "Group "+ group_count; //add numbers to groups
