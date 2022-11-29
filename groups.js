@@ -53,7 +53,7 @@ function make_groups(){                ///ERROR when theres 4 names and 3 groups
     
         let ppl_num = student_list.length/g_num_int; //get students / groups
     
-        ppl_num = Math.ceil(ppl_num); //round up
+        ppl_num = Math.floor(ppl_num); //round up
         let idx = 0; //keep track of index
         let group_count = 1; //count group num
         for(let i = 0; i<g_num_int; i++){
@@ -62,13 +62,23 @@ function make_groups(){                ///ERROR when theres 4 names and 3 groups
             group_div.innerText = "Group "+ group_count; //add numbers to groups
             group_div.id = "first_group";
             groups.append(group_div); //add to main container
-            for(j=0; j<ppl_num; j++){
-                const member = document.createElement("p"); //add paragraphs based on the ppl number
-                member.innerText = student_list[idx]; //add the correct student to group
-                group_div.append(member); //add this stuff tour our group div
-                idx++;
-                if(idx == student_list.length){ //if we reach the end, stop
-                    break;
+            if(i + 1 >= g_num_int){   //add 1 to each group and the rest to last
+                while(idx < student_list.length){
+                    const member = document.createElement("p"); //add paragraphs based on the ppl number
+                    member.innerText = student_list[idx]; //add the correct student to group
+                    group_div.append(member); //add this stuff tour our group div
+                    idx++;
+                }
+            }
+            else{
+                for(j=0; j<ppl_num; j++){
+                    const member = document.createElement("p"); //add paragraphs based on the ppl number
+                    member.innerText = student_list[idx]; //add the correct student to group
+                    group_div.append(member); //add this stuff tour our group div
+                    idx++;
+                    if(idx == student_list.length){ //if we reach the end, stop
+                        break;
+                    }
                 }
             }
             group_count++;  //for every new group add a new number
