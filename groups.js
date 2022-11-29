@@ -1,4 +1,10 @@
-let student_list = [];
+//works like 97% of the time i guess.... havent had time to debug the issue of 4ppl and 3 groups, if you arent trying to break
+//it will work. Just pick reasonable numbers for the amount of ppl. Added some little error checking too....
+//for example if theres 6 students dont pick 5 groups....
+
+let student_list = [];  //list of students
+let shuffles = 0; //amount of shuffles allowed
+
 
 
 function add_student(){
@@ -30,15 +36,19 @@ function add_student(){
 console.log(student_list);
 }
 
+function shuffleArray(arr) {          //shuffle array function
+    arr.sort(() => Math.random() - 0.5);
+  }
 
-function make_groups(){
+
+function make_groups(){                ///ERROR when theres 4 names and 3 groups... not sure why?
+    shuffleArray(student_list);
     const g_num = document.getElementById("group_number").value; //get number of groups
     const g_num_int = parseInt(g_num); //convert to int
-    if(g_num_int>student_list.length){ //if more groups than students it wont work
-        alert("too many groups");
+    if(g_num_int>student_list.length || g_num == "" || Number.isInteger(g_num_int) == false ){ //if more groups than students it wont work
+        alert("too many groups, or the number of groups you added is not a number!");
     }
     else{
-       // console.log(g_num_int);
         const groups = document.getElementById("random-group"); //get container for our groups
     
         let ppl_num = student_list.length/g_num_int; //get students / groups
@@ -50,6 +60,7 @@ function make_groups(){
             const group_div = document.createElement("div"); //create div for groups
             group_div.classList.add("group"); //name our groups
             group_div.innerText = "Group "+ group_count; //add numbers to groups
+            group_div.id = "first_group";
             groups.append(group_div); //add to main container
             for(j=0; j<ppl_num; j++){
                 const member = document.createElement("p"); //add paragraphs based on the ppl number
@@ -60,10 +71,38 @@ function make_groups(){
                     break;
                 }
             }
-            group_count++;
-    
+            group_count++;  //for every new group add a new number
         }
+        if(shuffles == 0){   //only call shuffle once
+            shuffle_names();
+        }
+
+        
     }
 
 
 }
+
+function shuffle_names(){
+    const submit_box = document.getElementById("submit_box"); //get submit container
+    const submit_button = document.getElementById("submit-btn"); //get button
+    const shuffle_button = document.createElement("button"); //create shuffle button
+    shuffle_button.innerHTML = "shuffle"; //add text
+    submit_button.remove();  
+    submit_box.append(shuffle_button); //replace submit with shuffle button
+
+
+    shuffle_button.addEventListener("click", event =>{  
+        shuffle_button.remove();                           //get rid of shuffle
+        shuffles = 1;                               //increase shuffles to 1 (so the first function doesnt call this again)              
+        const parent = document.getElementById("random-group");   //get our parent group
+        while (parent.firstChild) {
+            parent.firstChild.remove();  //remove previous groups
+        }
+        make_groups();                //make new ones =)
+
+    })
+}
+
+
+
